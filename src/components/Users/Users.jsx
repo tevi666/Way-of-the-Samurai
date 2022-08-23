@@ -27,10 +27,11 @@ const Users = (props) => {
                         <Link to={'/profile/' + u.id}><img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto} />
                         </Link>
                     </div>
-                    <div className="">
+                    <div>
                         {u.followed ?
                             <button
                                 onClick={() => {
+
                                     axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
                                         withCredentials: true,
                                         headers: {
@@ -44,7 +45,7 @@ const Users = (props) => {
                                         });
                                 }}
                             >
-                                Unfollow
+                                unfollow
                             </button> :
                             <button
                                 onClick={() => {
@@ -61,7 +62,6 @@ const Users = (props) => {
                                             }
                                         });
                                 }}
-
                             >
                                 Follow</button>
                         }
