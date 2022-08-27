@@ -1,9 +1,9 @@
 import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { setUserProfile } from "../../redux/profileReducer";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { usersAPI } from "../../api/api";
+import { getUserProfile } from "../../redux/profileReducer";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { withAuthNavigate } from "../../hoc/withAuthNavigate";
 
 
 class ProfileContainer extends React.Component {
@@ -14,11 +14,7 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = 2;
         }
-
-        usersAPI.userId(this.props.userId)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
+        this.props.getUserProfile(userId);
     }
 
     render() {
@@ -29,7 +25,6 @@ class ProfileContainer extends React.Component {
         )
     }
 }
-
 
 // wrapper to use react router's v6 hooks in class component (to use HOC pattern, like in router v5)
 function withRouter(Component) {
@@ -50,10 +45,12 @@ function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
+let AuthNavigateComponent = withAuthNavigate(ProfileContainer);
+
 let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
 })
 
 export default connect(mapStateToProps, {
-    setUserProfile
-})(withRouter(ProfileContainer));
+    getUserProfile
+})(withRouter(AuthNavigateComponent));

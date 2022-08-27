@@ -4,6 +4,7 @@ import { follow, setCurrentPage, unfollow, setToggleIsFollowingProgress, getUser
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 import { usersAPI } from '../../api/api';
+import { withAuthNavigate } from '../../hoc/withAuthNavigate';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -45,4 +46,4 @@ let mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { follow, unfollow, setCurrentPage, setToggleIsFollowingProgress, getUsers: getUsers })(UsersContainer);
+export default withAuthNavigate(connect(mapStateToProps, { follow, unfollow, setCurrentPage, setToggleIsFollowingProgress, getUsers: getUsers })(UsersContainer));
