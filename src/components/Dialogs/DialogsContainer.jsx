@@ -2,6 +2,7 @@ import { sendMessageActionCreator, updateNewMessageBodyActionCreator } from "../
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { withAuthNavigate } from "../../hoc/withAuthNavigate";
+import { compose } from "redux";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,9 +20,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-let AuthNavigateComponent = withAuthNavigate(Dialogs);
-
-
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthNavigateComponent);
-
-export default DialogsContainer;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthNavigate
+)(Dialogs);
