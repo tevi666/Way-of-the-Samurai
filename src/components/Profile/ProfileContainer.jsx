@@ -61,5 +61,5 @@ export default compose(
         updateStatus
     }),
     withRouter,
-    withAuthNavigate
+    // withAuthNavigate
 )(ProfileContainer);

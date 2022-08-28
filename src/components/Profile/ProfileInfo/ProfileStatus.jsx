@@ -1,4 +1,5 @@
 import React from 'react';
+import Preloader from '../../common/Preloader/Preloader';
 
 class ProfileStatus extends React.PureComponent {
     state = {
@@ -20,6 +21,13 @@ class ProfileStatus extends React.PureComponent {
         this.setState({
             status: e.currentTarget.value
         });
+    };
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            });
+        }
     }
 
     render() {
@@ -27,7 +35,7 @@ class ProfileStatus extends React.PureComponent {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status || '---'}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || <Preloader />}</span>
                     </div>
                 }
                 {this.state.editMode &&
