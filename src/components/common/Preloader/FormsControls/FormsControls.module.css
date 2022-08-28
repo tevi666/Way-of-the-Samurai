@@ -9,3 +9,10 @@
     color: red;
     text-shadow: 1px 1px 1px red;
 }
+.formSummaryError {
+    border: 2px solid red;
+    padding: 5px;
+    color: red;
+    width: 200px;
+    margin: 10px 0;
+}

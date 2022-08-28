@@ -6,6 +6,7 @@ import { Input } from '../common/Preloader/FormsControls/FormsControls';
 import styled from './Login.module.css';
 import { login } from '../../redux/authReducer'
 import { Navigate } from 'react-router-dom';
+import style from './../common/Preloader/FormsControls/FormsControls.module.css'
 
 const LoginForm = (props) => {
     return (
@@ -36,6 +37,9 @@ const LoginForm = (props) => {
                     remember me
                 </span>
             </div>
+            {props.error && <div className={style.formSummaryError}>
+                {props.error}
+            </div>}
             <div>
                 <button>Login</button>
             </div>
@@ -47,8 +51,8 @@ const Login = (props) => {
     const onSubmit = (formData) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
-    if(props.isAuth) {
-        return <Navigate to="/profile"/>
+    if (props.isAuth) {
+        return <Navigate to="/profile" />
     }
     return (
         <div>
