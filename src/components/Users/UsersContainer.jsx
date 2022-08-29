@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { follow, setCurrentPage, unfollow, setToggleIsFollowingProgress, getUsers } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import { usersAPI } from '../../api/api';
 import { withAuthNavigate } from '../../hoc/withAuthNavigate';
 import { compose } from 'redux';
 
@@ -48,6 +47,6 @@ let mapStateToProps = (state) => {
 };
 
 export default compose(
-    withAuthNavigate,
+    // withAuthNavigate,
     connect(mapStateToProps, { follow, unfollow, setCurrentPage, setToggleIsFollowingProgress, getUsers: getUsers })
 )(UsersContainer)
