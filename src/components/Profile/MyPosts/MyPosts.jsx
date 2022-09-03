@@ -16,7 +16,9 @@ const MyPosts = React.memo((props) => {
       <h3>My posts</h3>
       <AddNewPostFormRedux onSubmit={onAddPost} />
       <div className={s.posts}>{
-        props.posts.map((p) => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
+        [...props.posts]
+        .reverse()
+        .map((p) => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
       }
       </div>
     </div>
