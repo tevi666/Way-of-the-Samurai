@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./components/NotFound";
 import "./App.css";
@@ -9,9 +9,10 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import { initializeApp } from './redux/appReducer';
-import { connect } from "react-redux";
+import { connect, Provider } from "react-redux";
 import Preloader from "./components/common/Preloader/Preloader";
 import { compose } from "redux";
+import store from './redux/reduxStore'
 
 class App extends React.Component {
   componentDidMount() {
@@ -81,6 +82,15 @@ function withRouter(Component) {
 
   return ComponentWithRouterProp;
 }
-export default compose(
+let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeApp }))(App);
+
+const SamuraiJsApp = (props) => {
+  return <BrowserRouter>
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  </BrowserRouter>
+}
+export default SamuraiJsApp

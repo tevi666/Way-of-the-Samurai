@@ -1,7 +1,7 @@
 import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 
-class ProfileStatus extends React.PureComponent {
+class ProfileStatus extends React.Component {
     state = {
         editMode: false,
         status: this.props.ststus
