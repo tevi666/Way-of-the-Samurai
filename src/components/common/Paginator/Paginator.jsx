@@ -16,7 +16,7 @@ const Paginator = ({ totalUsersCount, pageSize, currentPage, slice, onPageChange
     return (
         <div>
             {slicedPages.map((p, i) => {
-                return <span onClick={(e) => { onPageChanged(p) }} key={i} className={currentPage === p && styled.selectedPage}>{p}</span>
+                return <span style={{ border: '1px dashed black', padding: '4px' }} onClick={(e) => { onPageChanged(p) }} key={i} className={currentPage === p && styled.selectedPage}>{p}</span>
             })}
         </div>
     );
