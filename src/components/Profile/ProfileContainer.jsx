@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getUserProfile, getStatus, updateStatus } from "../../redux/profileReducer";
+import { getUserProfile, getStatus, updateStatus, savePhoto } from "../../redux/profileReducer";
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { withAuthNavigate } from "../../hoc/withAuthNavigate";
 import { compose } from "redux";
@@ -9,12 +9,11 @@ import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount() {
-
+    refreshProfile() {
         let userId = this.props.router.params.userId;
         if (!userId) {
             userId = this.props.authorizedUserId;
-            if (!userId) {
+            if (userId) {
                 return <Navigate to='/login' />
             }
         }
@@ -24,13 +23,26 @@ class ProfileContainer extends React.Component {
         }, 1000);
     }
 
+    componentDidMount() {
+        this.refreshProfile();
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.router.params.userId != prevProps.router.params.userId) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
         return (
             <div>
-                <Profile {...this.props}
-                profile={this.props.profile} 
-                status={this.props.status} 
-                updateStatus={this.props.updateStatus} />
+                <Profile
+                    isOwner={!this.props.router.params.userId}
+                    {...this.props}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    updateStatus={this.props.updateStatus}
+                    savePhoto={this.props.savePhoto}
+                />
             </div>
         )
     }
@@ -60,14 +72,14 @@ let mapStateToProps = (state) => ({
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
     isAuth: state.auth.isAuth
-
 })
 
 export default compose(
     connect(mapStateToProps, {
         getUserProfile,
         getStatus,
-        updateStatus
+        updateStatus,
+        savePhoto
     }),
     withRouter,
     withAuthNavigate

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import userPhoto from '../../assets/images/users.png';
-import Paginator from '../common/Paginator/Paginator';
 import styles from './users.module.css';
 
 const User = ({ user, followingInProgress, unfollow, follow }) => {
