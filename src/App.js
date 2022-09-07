@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { HashRouter, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import NotFound from "./components/NotFound";
 import "./App.css";
@@ -17,8 +17,15 @@ const UsersContainer = React.lazy(() => import("./components/Users/UsersContaine
 
 
 class App extends React.Component {
+  catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    // alert(promiseRejectionEvent)
+  }
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors);
   }
 
   render() {
@@ -33,7 +40,7 @@ class App extends React.Component {
         <div className="app-wrapper-content">
           <Suspense fallback={<div><Preloader /></div>}>
             <Routes>
-              <Route
+              {/* <Route
                 path="/"
                 element={
                   <img
@@ -41,7 +48,8 @@ class App extends React.Component {
                     style={{ maxWidth: "100%" }}
                   />
                 }
-              />
+              /> */}
+              <Route path="/" element={<Navigate to="/profile" />} />
               <Route
                 path="/dialogs/*"
                 element={<DialogsContainer />}
